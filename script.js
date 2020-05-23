@@ -5,10 +5,6 @@ const goods = [
   { title: 'Shoes', price: 250 },
 ];
 
-// let [{title, price}] = goods; деструктуризация массива?
-//Не понимаю, где добавить значение по умолчанию.
-//и как это должно работать
-
 const renderGoodsItem = (item) => {
   return `<div class="goods-item">
   <h3>${item.title}</h3>
