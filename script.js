@@ -1,7 +1,7 @@
 class ProductsList {
-  constructor(container = '.products') {
+  constructor(container = '.goods-list') {
     this.container = container;
-    this.goods = goods;
+    this.goods = [];
     this.allProducts = [];
     this._fetchProduct();
     this.render();
@@ -22,7 +22,6 @@ class ProductsList {
       const productObj = new ProductItem(product);
       this.allProducts.push(productObj);
       block.innerHTML += productObj.render();
-
     }
   }
 
@@ -34,7 +33,7 @@ class ProductsList {
 }
 
 class ProductItem {
-  constructor(product, img = "https://placehold.it/200x150"){
+  constructor(product, img="https://placehold.it/200x150"){
     this.title = product.title;
     this.id = product.id;
     this.img = product.img;
@@ -44,10 +43,10 @@ class ProductItem {
   render(){
     return `<div class="goods-item">
     <img alt="some img" src="${this.img}">
-    <h3>${item.title}</h3>
-    <p>${item.price}</p>
+    <h3>${this.title}</h3>
+    <p>${this.price}</p>
     <button class="buy-btn">BUY</button>
-    </div>`;
+    </div>`
   }
 }
 
