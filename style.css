@@ -20,6 +20,7 @@ header {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  position: relative;
   }
 
 .logo {
@@ -51,6 +52,21 @@ header {
   font-weight: 700;
 }
 
+.cart-hidden {
+  width: 250px;
+  height: 5px;
+  visibility: hidden;
+  border: 1px solid #8c8c8c;
+  position: absolute;
+  left: 700px;
+  top: 50px;
+  z-index: 10;
+}
+
+.cart-button:hover + .cart-hidden {
+  visibility: visible;
+}
+
 .goods-list {
   display: flex;
   justify-content: space-between;
@@ -58,8 +74,6 @@ header {
 }
 
 .goods-item {
-  width: 200px;
-  height: 200px;
   border: 1px solid #8c8c8c;
   display: flex;
   justify-content: center;
@@ -68,7 +82,8 @@ header {
 
 .goods-item p {
   position: absolute;
-  top: 30px;
+  top: 70px;
+  right: 10px;
 }
 
 .buy-btn {
@@ -81,5 +96,6 @@ header {
   font-size: 20px;
   font-weight: 700;
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
+  right: 5px;
 }

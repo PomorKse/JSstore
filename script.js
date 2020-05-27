@@ -1,19 +1,28 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class ProductsList {
   constructor(container = '.goods-list') {
     this.container = container;
     this.goods = [];
     this.allProducts = [];
-    this._fetchProduct();
-    this.render();
     this.total();
+    this._getProducts()
+        .then(data => {
+          this.goods = [...data];
+          this.render()
+        })
   }
-  _fetchProduct(){
-    this.goods = [
-      { title: 'Shirt', price: 150 },
-      { title: 'Socks', price: 50 },
-      { title: 'Jacket', price: 350 },
-      { title: 'Shoes', price: 250 },
-    ];
+
+  _getProducts(){
+    return fetch(`${API}/catalogData.json`)
+    .then (result => result.json())
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  total(){
+    return this.allProducts.reduce((accum, item) => accum += item.price, 0);
   }
 
   render(){
@@ -21,27 +30,21 @@ class ProductsList {
     for (let product of this.goods) {
       const productObj = new ProductItem(product);
       this.allProducts.push(productObj);
-      block.innerHTML += productObj.render();
+      block.insertAdjacentHTML('beforeend', productObj.render());
     }
-  }
-
-  total(){
-    let totalPrice = 0;
-    this.goods.forEach(item => totalPrice+=item.price);
-    return totalPrice;
   }
 }
 
 class ProductItem {
   constructor(product, img="https://placehold.it/200x150"){
-    this.title = product.title;
-    this.id = product.id;
-    this.img = product.img;
+    this.title = product.product_name;
     this.price = product.price;
+    this.id = product.id_product;
+    this.img = img;
   }
 
   render(){
-    return `<div class="goods-item">
+    return `<div class="goods-item" data-id="${this.id}">
     <img alt="some img" src="${this.img}">
     <h3>${this.title}</h3>
     <p>${this.price}</p>
@@ -50,20 +53,28 @@ class ProductItem {
   }
 }
 
-// class Cart {
-//   constructor(container = '.?'') {
-//     this.container = container;
-//     this.goods = goods;
-//     this.render();
-//     this.addProduct();
-//     this.deleteProduct();
-//   }
-// }
-//
-// class CartItem {
-//   constructor() {
-//
-//   }
-// }
 
-let list = new ProductsList();
+class Cart {
+  _getCart(){
+    return fetch(`${API}/getBasket.json`)
+    .then (result => result.json())
+    .then(data => {
+        const block = document.querySelector(".cart-hidden");
+        block.innerHTML(`<p>${data}</p>`);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  removeGoods(){
+  }
+  changeGoods(){
+  }
+}
+
+class elemCart {
+  }
+
+  let list = new ProductsList();
+  let cart = new Cart();
